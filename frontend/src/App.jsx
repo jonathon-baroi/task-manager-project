@@ -5,11 +5,18 @@ import { useUser } from "@clerk/clerk-react";
 import { IoNotificationsCircleOutline } from "react-icons/io5";
 import { CiSearch } from "react-icons/ci";
 import { useState, useEffect } from "react";
+import Task from "./Task.jsx";
+import LeftSection from "./LeftSection.jsx";
+import RightSection from "./RightSection.jsx";
+import { createContext } from "react";
+
+export const TaskContext = createContext();
+
 function App() {
   const { isLoaded, isSignedIn, user } = useUser();
   const [date, setDate] = useState(new Date());
   const [tasksCompleted, setTasksCompleted] = useState(70);
-
+  const [selectedTab, setSelectedTab] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
       setDate(new Date());
@@ -25,13 +32,6 @@ function App() {
     return null;
   }
 
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return "Good morning";
-    if (hour < 18) return "Good afternoon";
-    return "Good evening";
-  };
-
   return (
     <>
       <div className="home-container">
@@ -40,7 +40,7 @@ function App() {
           <div className="sidebar-option">Home</div>
         </div> */}
         <div className="right-section">
-          <nav>
+          <nav className="shadow">
             <input type="text" placeholder="Search" className="search-bar" />
             <div className="nav-right">
               <IoNotificationsCircleOutline
@@ -60,23 +60,15 @@ function App() {
               {/* <SignOutButton redirectUrl="/signup" /> */}
             </div>
           </nav>
-          <div className="dashboard">
-            <div className="greeting">{`${getGreeting()}, ${
-              user.firstName
-            }!`}</div>
-            <div className="welcome-message">
-              <div className="welcome-unit">
-                <div>
-                  Today's{" "}
-                  {date.toLocaleDateString("en-US", { weekday: "long" })}
-                </div>
-                <div className="muted">{formattedDate}</div>
-              </div>
-              <div className="welcome-unit">
-                <div>70% Done</div>
-                <div className="muted">Today's Tasks</div>
-              </div>
-            </div>
+          <div className="dashboard shadow">
+            <LeftSection
+              user={user}
+              date={date}
+              formattedDate={formattedDate}
+            />
+            <TaskContext.Provider value={{ selectedTab, setSelectedTab }}>
+              <RightSection />
+            </TaskContext.Provider>
           </div>
         </div>
       </div>
