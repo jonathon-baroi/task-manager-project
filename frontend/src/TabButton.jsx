@@ -1,10 +1,16 @@
 import React, { useState } from "react";
 import { useContext } from "react";
 import { TaskContext } from "./App";
+import { taskCountContext } from "./RightSection";
 
 export default function TabButton({ type }) {
-  const { selectedTab, setSelectedTab } = useContext(TaskContext);
-  const text = type === 0 ? "Today" : type === 1 ? "Upcoming" : "Overdue";
+  const { todayCount, upcomingCount, overdueCount } =
+    useContext(taskCountContext);
+  const { selectedTab, setSelectedTab, tasks } = useContext(TaskContext);
+  const text = type === 0 ? `Today` : type === 1 ? `Upcoming` : `Overdue`;
+
+  const count =
+    type === 0 ? todayCount : type === 1 ? upcomingCount : overdueCount;
   return (
     <>
       <div className="tab-button-container">
@@ -23,7 +29,10 @@ export default function TabButton({ type }) {
             type === selectedTab ? "active-tab" : "tab-button"
           }`}
         >
-          <div className="tab-text">{text}</div>
+          <div className="only-tab-text">
+            <div className="tab-text">{text}</div>
+            <div className="count-class"> {count}</div>
+          </div>
         </button>
         {type === selectedTab && (
           <>

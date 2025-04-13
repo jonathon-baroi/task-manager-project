@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from "react";
-
+import React, { useEffect, useRef, useState, useContext } from "react";
+import { AiFillCloseSquare } from "react-icons/ai";
+import { ModalContext } from "./App";
 export default function LeftSection({ user, date, formattedDate }) {
   const getGreeting = () => {
     const hour = new Date().getHours();
@@ -71,24 +72,143 @@ export default function LeftSection({ user, date, formattedDate }) {
       return `${getRandom(nightGreetings)} ${getRandom(nightPhrases)}`;
     }
   };
+  const { setTasks } = useContext(ModalContext);
+  const dialogRef = useRef();
+  const [taskHeading, setTaskHeading] = useState("");
+  const [taskDate, setTaskDate] = useState("");
+  const [taskTime, setTaskTime] = useState("");
+  const [isRecurring, setIsRecurring] = useState(false);
+
+  const openModal = () => {
+    dialogRef.current.showModal();
+  };
+
+  const handleCloseModal = () => {
+    dialogRef.current.close();
+  };
+
+  const handleAddTask = (e) => {
+    e.preventDefault();
+
+    const newTask = {
+      id: crypto.randomUUID(),
+      heading: taskHeading,
+      date: taskDate,
+      time: taskTime,
+      recurring: isRecurring,
+    };
+
+    console.log("Task Added:", newTask);
+    setTasks((tasks) => {
+      console.log(tasks);
+      return [...tasks, newTask];
+    });
+
+    // Reset form and close modal
+    setTaskHeading("");
+    setTaskDate("");
+    setTaskTime("");
+    setIsRecurring(false);
+    handleCloseModal();
+  };
 
   const greeting = useRef(getGreeting());
 
   return (
-    <div className="left-section">
-      <div className="greeting">{`${greeting.current}, ${user.firstName}!`}</div>
-      <div className="welcome-message">
-        <div className="welcome-unit">
-          <div>
-            Today's {date.toLocaleDateString("en-US", { weekday: "long" })}
+    <>
+      <div className="left-section">
+        <div className="greeting">{`${greeting.current}, ${user.firstName}!`}</div>
+        <div className="welcome-message">
+          <div className="welcome-unit">
+            <div>
+              Today's {date.toLocaleDateString("en-US", { weekday: "long" })}
+            </div>
+            <div className="muted">{formattedDate}</div>
           </div>
-          <div className="muted">{formattedDate}</div>
-        </div>
-        <div className="welcome-unit">
-          <div>70% Done</div>
-          <div className="muted">Today's Tasks</div>
+          {/* <div className="welcome-unit">
+            <div>70% Done</div>
+            <div className="muted">Today's Tasks</div>
+          </div> */}
+          <div className="add-task-button-container">
+            <button className="add-task-button" onClick={openModal}>
+              <div className="plus-sign">+</div>
+              Task
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+      <div>
+        <dialog ref={dialogRef} className="task-modal">
+          <div className="modal-header">
+            {/* <h2>Add a New Task</h2> */}
+
+            <AiFillCloseSquare
+              onClick={handleCloseModal}
+              className="close-button"
+              size={50}
+            />
+          </div>
+
+          <form onSubmit={handleAddTask} className="modal-form">
+            <div className="form-group">
+              <label htmlFor="taskHeading">Task Heading</label>
+              <input
+                type="text"
+                id="taskHeading"
+                name="taskHeading"
+                placeholder="e.g. Walk the dog."
+                required
+                className="modal-input"
+                value={taskHeading}
+                onChange={(e) => setTaskHeading(e.target.value)}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="taskDate">Date</label>
+              <input
+                type="date"
+                id="taskDate"
+                name="taskDate"
+                className="modal-input"
+                required
+                value={taskDate}
+                onChange={(e) => setTaskDate(e.target.value)}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="taskTime">
+                Time <span className="optional-text">(optional)</span>
+              </label>
+              <input
+                type="time"
+                className="modal-input"
+                id="taskTime"
+                name="taskTime"
+                value={taskTime}
+                onChange={(e) => setTaskTime(e.target.value)}
+              />
+            </div>
+
+            {/* <div className="checkbox-group">
+              <div>Recurring</div>
+              <input
+                type="checkbox"
+                id="taskRecurring"
+                name="taskRecurring"
+                className="check-box1"
+                checked={isRecurring}
+                onChange={(e) => setIsRecurring(e.target.checked)}
+              />
+            </div> */}
+
+            <button type="submit" className="submit-button">
+              Add Task
+            </button>
+          </form>
+        </dialog>
+      </div>
+    </>
   );
 }

@@ -10,7 +10,7 @@ html, body {
   }
 
 .home-container{    
-    height: 100;
+    height: 100vh;
     width: 100%;
     color: aliceblue;
     
@@ -19,7 +19,148 @@ html, body {
     display: flex;
 }
 
+.add-task-button {
+    height: 7rem;
+    border: none;
+    border-radius: 3rem;
+    background-color: var(--light-gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    color: white;
+    font: inherit;
+    font-size: 1.5rem;
+    width: 60%;
 
+}
+
+.add-task-button:hover {
+    background-color: #444444;
+    transition: .2s;
+}
+
+.add-task-button:active {
+    background-color: #0a0a0a;  
+    transition: 0s;
+    }
+
+.task-modal {
+    border-radius: 3rem;
+    /* border: none; */
+    border: #5e5e5e solid;
+    background-color: var(--dark-gray);
+    color: white;
+    width: 30%;
+    height: 80%
+}
+dialog.modal {
+    border: none;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    width: 80%;
+    height: 80%;
+    display: flex;
+    justify-content: right;
+  }
+
+.modal-header {
+    display: flex;
+    gap: 2rem;
+    justify-content: right;
+    padding-left: 4rem;
+    margin-top: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+    
+}
+
+.modal-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap:2rem;
+}
+.check-box1 {
+    width: 2rem;
+    height: 2rem;
+}
+.checkbox-group {
+    display: flex;
+    gap: .5rem;
+    align-items: center;    
+}
+.modal-input{
+    height: 3rem;
+    border-radius: .5rem;
+    border: none;
+    width: 20rem;
+    font: inherit;
+    font-size: 1rem;
+    padding-left: 1rem;
+    display: flex;
+    justify-content: right;
+
+}
+.modal-input:focus{
+    outline: none;
+    border: none;
+}
+
+.task-styling {
+    display: flex;
+    flex-direction: column;
+    font-size: large;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap:.3rem;
+}
+.close-button  {
+    padding: 0;            
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 0;
+    margin: 0;
+  }
+
+.optional-text {
+    color: #6d6d6d;
+}
+
+.close-button:active  {
+    padding: 0; 
+    color: #4e4e4e;           
+}
+
+
+
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .count-class {
+    border-radius: 10rem;
+    background-color: #947272;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    ;
+  }
+.plus-sign {
+    font-size: 5rem;
+    
+    background: linear-gradient(90deg, green, blue, red, indigo);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+    -webkit-text-stroke: .07rem rgb(182, 182, 182);
+}
 
 nav {
     display: flex;
@@ -55,7 +196,23 @@ nav {
     width: 100%;    
     display: flex;
     flex-direction: column;  
+    height: 100%;
+    margin: 0;
     /* margin-left: 2rem;   */
+}
+
+.task-complete-button {
+    width: 2rem;
+    height: 2rem;
+    border-radius: 100rem;
+    background-color: inherit;
+    /* transition: all 1s; */
+}
+
+
+
+.task-complete-button:active {
+    background-color: rgb(46, 46, 46);
 }
 
 .search-bar {
@@ -70,7 +227,7 @@ nav {
     background-repeat: no-repeat;
     background-position: left center;
     padding-left: 40px;
-    width: 20%
+    width: 70%
 }
 
 .dashboard {
@@ -82,6 +239,7 @@ nav {
     font-size: 2rem;   
     display: flex;
     justify-content: left;
+    height: 100%
     
 }
 
@@ -92,6 +250,15 @@ nav {
     gap: 2rem;
     margin-top: 1rem;
     
+}
+
+.add-task-button-container{
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
 }
 
 .welcome-unit {
@@ -115,14 +282,26 @@ nav {
     height: 100%;
     border-radius: 2rem;
     padding: 2rem;
-    
+    justify-content: left;
+    display: flex;   
+}
+
+.task-text-group {
+    width: 100%;
+}
+
+.task-list {
+    width: 100%;
 }
 
 .task {
     background-color: #FDE0D9;
     color: black;
     border-radius: 2rem;
-    padding: 1rem;    
+    padding: 1rem;   
+    display: flex; 
+    align-items: center;
+    gap: 1rem;
 }
 
 .category-text {
@@ -142,10 +321,12 @@ nav {
     display: flex;
     flex-direction: column;       
     width: 100%;
+    height: 100%;
 }
 
+
 .left-section {
-    width: 40%
+    
 }
 
 .tab-container {
@@ -200,6 +381,9 @@ nav {
 
 .tab-text {
     z-index: 10;
+    margin-top: .6rem;
+
+    margin-bottom: .6rem;
 }
 
 .left-box {
@@ -227,7 +411,19 @@ nav {
     margin-left: -20px;
     margin-right: -40px;
 }
-
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+.nav-button {
+    background-color: inherit;
+    color: inherit;
+    font: inherit;
+    border-radius: 3rem;
+    padding: 1rem;
+    font-size: 1rem;
+}
 .right-box {
     background-color: var(--light-gray);
     width: 20px;
@@ -236,11 +432,39 @@ nav {
 
 }
 
+
+.submit-button {
+    font: inherit;
+    border-radius: 3rem;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: var(--light-gray);
+    border: none;
+    color: white;
+}
+
+.submit-button:hover {
+    background-color: #444444;
+}
+
+.submit-button:active {
+    background-color: #000000;
+}
+
 .tab-button-container {
     display: flex;   
     flex: 1;
     justify-content: center;
-    align-items: end;
+    align-items: end;    
+}
+
+.only-tab-text{
+    display: flex;
+    justify-content: center;
+    gap: .4rem;
+    align-items: center;
 }
 
 @media (max-width: 1022px) {
@@ -267,7 +491,7 @@ nav {
         font-size: .5rem;
      }
      .tab-container {
-        width: 80%;
+        width: 60%;
         font-size: 10px;
         margin-left: 0;
         margin-right: 0;
@@ -275,6 +499,14 @@ nav {
         justify-content: center;
         gap: .3rem;   
      }
+
+     .task-modal {
+        width: 80%;
+        height: 80%
+    }
+
+  
+
 
      .right-section2 {
         padding-left: 0rem;
@@ -290,6 +522,7 @@ nav {
         font-size: .7rem;;
         padding-top: .4rem;
         padding-bottom: .4rem;
+        
         
     }
     .task-text {
@@ -313,11 +546,36 @@ nav {
     }
 
     nav {
-        visibility: hidden;   
-        width: 0;
-        height: 0;
-        margin: 0;
-        padding: 0;
+        
+        margin: 3rem 1rem 1rem 1rem;
+
+    }
+
+    .left-box {
+        width: .5rem;
+        height: .5rem;
+        margin-left: -.5rem;
+    }
+    .left-circle {
+        width: 1rem;
+        height: 1rem;
+        margin-right: 0rem;
     }
     
+    .right-box {
+        width: .5rem;
+        height: .5rem;
+        margin-right: -.5rem;
+    }
+    .right-circle {
+        width: 1rem;
+        height: 1rem;
+        margin-left: 0rem;
+    }
+    
+    .active-tab {
+        border-top-right-radius: 1rem;
+        border-top-left-radius: 1rem;
+    }
+
     }
