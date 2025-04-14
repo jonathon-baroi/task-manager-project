@@ -24,7 +24,12 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ClerkProvider
       publishableKey={PUBLISHABLE_KEY}
-      appearance={{ baseTheme: dark }}
+      appearance={{
+        baseTheme: dark,
+        layout: {
+          unsafe_disableDevelopmentModeWarnings: true,
+        },
+      }}
       signInUrl="/signin"
       signUpUrl="/signup"
       fallbackRedirectUrl="/home"
