@@ -2,7 +2,7 @@
 
 Note: The app currently supports desktop aspect ratios only.
 
-Deployed Application: https://task-manager-project-five.vercel.app/
+[DEPLOYED APPLICATION](https://task-manager-project-five.vercel.app/)
 
 ## This is a full stack project utilizing the following technologies:
 
