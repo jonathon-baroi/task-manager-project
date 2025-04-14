@@ -1,4 +1,6 @@
-## Note: Currently the app is only designed for a desktop aspect ratio.
+# Full-Stack Task Tracking Application
+
+Note: The app currently supports desktop aspect ratios only.
 
 Deployed Application: https://task-manager-project-five.vercel.app/
 
