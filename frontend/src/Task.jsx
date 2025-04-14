@@ -13,8 +13,20 @@ export default function Task({
 }) {
   const { setTasks } = useContext(TaskContext);
 
-  const handleDelete = (idToDelete) => {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== idToDelete));
+  const handleDelete = async () => {
+    try {
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+
+      const response = await fetch(`http://localhost:3000/delete-task/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete task");
+      }
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
   };
 
   return (

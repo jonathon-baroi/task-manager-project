@@ -1,7 +1,12 @@
 import React, { useEffect, useRef, useState, useContext } from "react";
 import { AiFillCloseSquare } from "react-icons/ai";
 import { ModalContext } from "./App";
-export default function LeftSection({ user, date, formattedDate }) {
+export default function LeftSection({
+  user,
+  date,
+  formattedDate,
+  backendUser,
+}) {
   const getGreeting = () => {
     const hour = new Date().getHours();
     const getRandom = (arr) => arr[Math.floor(Math.random() * arr.length)];
@@ -87,29 +92,43 @@ export default function LeftSection({ user, date, formattedDate }) {
     dialogRef.current.close();
   };
 
-  const handleAddTask = (e) => {
+  const handleAddTask = async (e) => {
     e.preventDefault();
 
-    const newTask = {
-      id: crypto.randomUUID(),
+    const taskPayload = {
+      heading: taskHeading,
+      date: taskDate,
+      time: taskTime || null,
+      user_id: backendUser.id,
+    };
+    console.log("Payload:", {
       heading: taskHeading,
       date: taskDate,
       time: taskTime,
-      recurring: isRecurring,
-    };
-
-    console.log("Task Added:", newTask);
-    setTasks((tasks) => {
-      console.log(tasks);
-      return [...tasks, newTask];
+      user_id: backendUser?.id,
     });
+    try {
+      const response = await fetch("http://localhost:3000/add-task", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(taskPayload),
+      });
 
-    // Reset form and close modal
-    setTaskHeading("");
-    setTaskDate("");
-    setTaskTime("");
-    setIsRecurring(false);
-    handleCloseModal();
+      if (!response.ok) throw new Error("Failed to add task");
+
+      const { task } = await response.json();
+
+      setTasks((prev) => [...prev, task]);
+
+      // Reset form
+      setTaskHeading("");
+      setTaskDate("");
+      setTaskTime("");
+      setIsRecurring(false);
+      handleCloseModal();
+    } catch (err) {
+      console.error("Add task error:", err);
+    }
   };
 
   const greeting = useRef(getGreeting());

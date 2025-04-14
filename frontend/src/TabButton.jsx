@@ -23,7 +23,7 @@ export default function TabButton({ type }) {
         <button
           onClick={() => {
             setSelectedTab(type);
-            console.log(type);
+            // console.log(type);
           }}
           className={`tab ${
             type === selectedTab ? "active-tab" : "tab-button"

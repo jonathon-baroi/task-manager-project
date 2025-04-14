@@ -10,6 +10,21 @@ export const taskCountContext = createContext();
 export default function RightSection() {
   const { selectedTab, setSelectedTab, tasks } = useContext(TaskContext);
 
+  const formatTime = (timeString) => {
+    if (!timeString || timeString === "") return "";
+
+    const [hours, minutes] = timeString.split(":");
+
+    const hour = parseInt(hours, 10);
+    const minute = minutes || "00";
+
+    const period = hour >= 12 ? "PM" : "AM";
+
+    const twelveHour = hour % 12 || 12;
+
+    return `${twelveHour}:${minute} ${period}`;
+  };
+
   const today = new Date();
   const currentDate = [
     today.getFullYear(),
@@ -28,7 +43,7 @@ export default function RightSection() {
     if (selectedTab === 0) {
       return (
         task.date === currentDate &&
-        (task.time === "" || task.time >= currentTime)
+        (task.time === "" || task.time === null || task.time >= currentTime)
       );
     }
 
@@ -41,6 +56,7 @@ export default function RightSection() {
         task.date < currentDate ||
         (task.date === currentDate &&
           task.time !== "" &&
+          task.time !== null &&
           task.time < currentTime)
       );
     }
@@ -48,10 +64,17 @@ export default function RightSection() {
     return true;
   });
 
+  const sortedTasks = [...filteredTasks].sort((a, b) => {
+    if ((!a.time || a.time === "") && (!b.time || b.time === "")) return 0;
+    if (!a.time || a.time === "") return -1;
+    if (!b.time || b.time === "") return 1;
+    return a.time.localeCompare(b.time);
+  });
+
   const todayCount = tasks.filter(
     (task) =>
       task.date === currentDate &&
-      (task.time === "" || task.time >= currentTime)
+      (task.time === "" || task.time === null || task.time >= currentTime)
   ).length;
 
   const upcomingCount = tasks.filter((task) => task.date > currentDate).length;
@@ -59,7 +82,9 @@ export default function RightSection() {
   const overdueCount = tasks.filter(
     (task) =>
       task.date < currentDate ||
-      (task.date === currentDate && task.time !== "" && task.time < currentTime)
+      (task.date === currentDate &&
+        (task.time !== "" || task.time !== null) &&
+        task.time < currentTime)
   ).length;
 
   return (
@@ -72,14 +97,14 @@ export default function RightSection() {
         </taskCountContext.Provider>
         <div className="task-container">
           <ul className="task-list">
-            {filteredTasks.map((task) => {
+            {sortedTasks.map((task) => {
               return (
                 <li key={task.id}>
                   <Task
                     id={task.id}
                     heading={task.heading}
                     date={task.date}
-                    time={task.time}
+                    time={`at ${formatTime(task.time)}`}
                   />
                 </li>
               );

@@ -17,37 +17,55 @@ export const allTasksContext = createContext();
 
 function App() {
   const { isLoaded, isSignedIn, user } = useUser();
-  const { getToken } = useAuth();
-  const [dbUser, setDbUser] = useState(null);
+  const fetchTasks = async () => {
+    // Only fetch if we have a backend user ID
+    if (!backendUser?.id) return;
+
+    try {
+      const response = await fetch(
+        `http://localhost:3000/tasks/${backendUser.id}`
+      );
+      const data = await response.json();
+      setTasks(data.tasks);
+    } catch (error) {
+      console.error("Failed to fetch tasks:", error);
+    }
+  };
+  const [backendUser, setBackendUser] = useState(null);
+  const syncUser = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/sync-user", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ clerk_id: user.id }),
+      });
+      const data = await response.json();
+
+      if (data.exists) {
+        console.log("Existing user:", data.user);
+      } else {
+        console.log("New user created:", data.user);
+      }
+
+      setBackendUser(data.user);
+
+      return data.user;
+    } catch (error) {
+      console.error("Sync failed:", error);
+    }
+  };
 
   useEffect(() => {
-    const syncUser = async () => {
-      try {
-        const token = await getToken();
-        const res = await fetch("http://localhost:3000/me", {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          credentials: "include",
-        });
-
-        if (!res.ok) {
-          throw new Error("Failed to fetch user data");
-        }
-
-        const data = await res.json();
-        setDbUser(data.user);
-      } catch (error) {
-        console.error("Error syncing user:", error);
-      }
-    };
-
     if (user) {
       syncUser();
     }
-  }, [user, getToken]);
+  }, [user]);
 
+  useEffect(() => {
+    if (backendUser?.id) {
+      fetchTasks();
+    }
+  }, [backendUser]);
   const [date, setDate] = useState(new Date());
   const [tasksCompleted, setTasksCompleted] = useState(70);
   const [selectedTab, setSelectedTab] = useState(0);
@@ -109,6 +127,7 @@ function App() {
                 user={user}
                 date={date}
                 formattedDate={formattedDate}
+                backendUser={backendUser}
               />
             </ModalContext.Provider>
 
