@@ -22,7 +22,7 @@ export default function RightSection() {
 
     const twelveHour = hour % 12 || 12;
 
-    return `${twelveHour}:${minute} ${period}`;
+    return `at ${twelveHour}:${minute} ${period}`;
   };
 
   const today = new Date();
@@ -104,7 +104,7 @@ export default function RightSection() {
                     id={task.id}
                     heading={task.heading}
                     date={task.date}
-                    time={`at ${formatTime(task.time)}`}
+                    time={`${formatTime(task.time)}`}
                   />
                 </li>
               );

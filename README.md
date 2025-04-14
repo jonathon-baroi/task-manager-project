@@ -1,3 +1,7 @@
+##Note: Currently the app is only designed for a desktop aspect ratio.
+
+Deployed Application: https://task-manager-project-five.vercel.app/
+
 ##This is a full stack project utilizing the following technologies:
 
 - Frontend -> React (deployed to Vercel)
@@ -15,3 +19,10 @@
   - Automatically categorizes tasks into Today, Upcoming, and Overdue sections.
 - Data Persistence:
   - All tasks are stored in a persistent database and retained across sessions.
+
+Features to be added in the future:
+
+- Editing tasks
+- Grouping tasks
+- Searching and Filtering
+- Collaborating with other users

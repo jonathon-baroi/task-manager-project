@@ -44,7 +44,7 @@ export default function Task({
           <div className="task-styling">
             {heading}
             <span className="muted">
-              {date} {time && `at ${time}`} {recurring && "(recurring)"}
+              {date} {time && ` ${time}`}
             </span>
           </div>
         </div>
