@@ -17,9 +17,12 @@ export default function Task({
     try {
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
 
-      const response = await fetch(`http://localhost:3000/delete-task/${id}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://task-manager-project-1-a97g.onrender.com/delete-task/${id}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to delete task");

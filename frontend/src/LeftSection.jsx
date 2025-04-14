@@ -108,11 +108,14 @@ export default function LeftSection({
       user_id: backendUser?.id,
     });
     try {
-      const response = await fetch("http://localhost:3000/add-task", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(taskPayload),
-      });
+      const response = await fetch(
+        "https://task-manager-project-1-a97g.onrender.com/add-task",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(taskPayload),
+        }
+      );
 
       if (!response.ok) throw new Error("Failed to add task");
 

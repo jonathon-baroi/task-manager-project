@@ -14,7 +14,7 @@ import { useAuth } from "@clerk/clerk-react";
 export const TaskContext = createContext();
 export const ModalContext = createContext();
 export const allTasksContext = createContext();
-
+//https://task-manager-project-1-a97g.onrender.com/
 function App() {
   const { isLoaded, isSignedIn, user } = useUser();
   const fetchTasks = async () => {
@@ -23,7 +23,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `http://localhost:3000/tasks/${backendUser.id}`
+        `https://task-manager-project-1-a97g.onrender.com/tasks/${backendUser.id}`
       );
       const data = await response.json();
       setTasks(data.tasks);
@@ -34,11 +34,14 @@ function App() {
   const [backendUser, setBackendUser] = useState(null);
   const syncUser = async () => {
     try {
-      const response = await fetch("http://localhost:3000/sync-user", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ clerk_id: user.id }),
-      });
+      const response = await fetch(
+        "https://task-manager-project-1-a97g.onrender.com/sync-user",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ clerk_id: user.id }),
+        }
+      );
       const data = await response.json();
 
       if (data.exists) {
