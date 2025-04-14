@@ -10,42 +10,37 @@ html, body {
 }
 
 .login-wrapper {
-    width: 50%;
-    border-top-left-radius: 20px;
-    border-bottom-left-radius: 20px;
+    width: 30%;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;         /* Full viewport height */
-    background: linear-gradient(to right, #424242, #3e485e);
+    height: 100vh;       
+    background-color: rgb(65, 65, 65)
 }
 
 .branding-wrapper {
-width: 50%;
+width: 70%;
 border-top-left-radius: 10px;
 border-bottom-left-radius: 10px;
 display: flex;
 justify-content: center;
 align-items: center;
-height: 100vh;         /* Full viewport height */
+height: 100vh;       
 
-font-size: 5rem;
-color: rgb(212, 212, 212);
-text-shadow: 0 0 5px rgb(116, 116, 116), 0 0 10px rgb(255, 255, 255);
-animation: flicker 1.5s infinite;
+
+color: rgb(255, 255, 255);
+font-family: "Playwrite MX Guides", cursive;
+font-weight: 400;
+font-style: normal;
+font-size: 9rem;
 
    
 
 
 } 
-@keyframes flicker {
-    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
-      opacity: 1;
-    }
-    20%, 24%, 55% {
-      opacity: 0.4;
-    }
-  }
+
 .clerk-part {
     width: 1px;
 }
