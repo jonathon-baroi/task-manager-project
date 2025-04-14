@@ -9,7 +9,7 @@ const supabase = createClient(
   process.env.SUPABASE_KEY
 );
 
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors({ origin: 'https://task-manager-project-five.vercel.app/' }));
 app.use(express.json());
 
 app.post('/sync-user', async (req, res) => {
