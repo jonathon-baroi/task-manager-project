@@ -126,6 +126,7 @@ ul {
     list-style-type: none;
     padding-left: 0;
     margin: 0;
+    
   }
 
 .optional-text {
@@ -196,7 +197,7 @@ nav {
     width: 100%;    
     display: flex;
     flex-direction: column;  
-    height: 100%;
+    height: 100vh;
     margin: 0;
     /* margin-left: 2rem;   */
 }
@@ -213,6 +214,7 @@ nav {
 
 .task-complete-button:active {
     background-color: rgb(46, 46, 46);
+    transition: .1s;
 }
 
 .search-bar {
@@ -239,13 +241,13 @@ nav {
     font-size: 2rem;   
     display: flex;
     justify-content: left;
-    height: 100%
+    
     
 }
 
 .welcome-message {
     display: flex;    
-    justify-content: space-between;    
+    justify-content: left;    
     flex-direction: column;
     gap: 2rem;
     margin-top: 1rem;
@@ -283,7 +285,8 @@ nav {
     border-radius: 2rem;
     padding: 2rem;
     justify-content: left;
-    display: flex;   
+    display: flex;  
+    
 }
 
 .task-text-group {
@@ -292,7 +295,31 @@ nav {
 
 .task-list {
     width: 100%;
+    overflow-y: auto;
+    max-height: 26rem;
+    padding-right: 2rem;
 }
+
+.task-list::-webkit-scrollbar {
+    width: .7rem;    
+  }
+  
+  .task-list::-webkit-scrollbar-track {
+    background: #505050;
+    border-radius: 4px;
+  }
+  
+  .task-list::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+  }
+  
+  .task-list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  .task-list::-webkit-scrollbar-thumb:active {
+    background: #2d2d2d;
+  }
 
 .task {
     background-color: #FDE0D9;
@@ -322,6 +349,7 @@ nav {
     flex-direction: column;       
     width: 100%;
     height: 100%;
+    
 }
 
 
@@ -476,6 +504,10 @@ nav {
         margin: 1rem;
         height: 100%;
      }
+
+     .add-task-button-container{
+        margin-bottom: 3rem;
+     }
      .home-container {
         height: 100vh;
      }
@@ -499,7 +531,11 @@ nav {
         justify-content: center;
         gap: .3rem;   
      }
-
+     .task-list {
+        width: 100%;
+        overflow-y: auto;
+        max-height: 19rem;
+    }
      .task-modal {
         width: 80%;
         height: 80%
@@ -542,7 +578,8 @@ nav {
 
     .task-container {
         width: 80%;
-        height: 100%;
+        
+        
     }
 
     nav {
@@ -577,5 +614,10 @@ nav {
         border-top-right-radius: 1rem;
         border-top-left-radius: 1rem;
     }
+    .add-task-button-container{
+        margin-top: 0;
+        padding-top: 0;
+    }
+    
 
     }
