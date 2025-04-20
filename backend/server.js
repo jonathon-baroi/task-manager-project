@@ -65,7 +65,7 @@ app.post('/add-task', async (req, res) => {
     }
 
     const { data: newTask, error } = await supabase
-      .from('tasks') // or whatever your table name is
+      .from('tasks') 
       .insert([{ heading, date, time, user_id }])
       .select()
       .single();
